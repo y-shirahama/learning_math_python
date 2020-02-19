@@ -1,4 +1,6 @@
 import numpy as np
+# 重回帰分析のみ読み込み
+from sklearn.linear_model import LinearRegression
 
 '''
 行列演算の基礎
@@ -69,22 +71,51 @@ y = np.array([
 
 # Step1:X転置行列を取得
 XtX = np.dot(X.T, X)
-print(XtX)
+# print(XtX)
 
 # Step2:X転置行列の逆行列を取得
 Xtx_inv = np.linalg.inv(XtX)
-print(Xtx_inv)
+# print(Xtx_inv)
 
 # Step3:y転置行列を取得
 Xty = np.dot(X.T, y)
-print(Xty)
+# print(Xty)
 
 # Step4:重みwを求める
 w = np.dot(Xtx_inv, Xty)
-print(w)
+# print(w)
 
 '''
 [[-0.14285714]
  [ 0.71428571]
  [ 0.57142857]]
 '''
+
+# モデルの宣言
+model = LinearRegression()
+
+'''
+モデルの学習
+
+線形回帰モデルのパラメータ調整を実行。
+xが対象データ、yが正解データ(教師あり学習が前提)
+'''
+model.fit(X, y)
+
+# 回帰変数と回帰直線の切片
+print(model.coef_)
+print(model.intercept_)
+
+'''
+予測精度
+
+予測値xと正解値yの相関を図り、決定係数を出力する。
+'''
+print(model.score(X, y))
+
+'''
+予測値の計算
+
+モデルを私用して、xに対して予測を実行し予測値を算出する。
+'''
+print(model.predict(X))
